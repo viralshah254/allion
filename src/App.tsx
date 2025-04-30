@@ -1,12 +1,26 @@
 import './App.css'
 
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Outlet } from 'react-router-dom';
 import HomePage from './components/LandingPage/HomePage';
 import TailwindTest from './components/TailwindTest';
 import DashboardLayout from './components/Dashboard/DashboardLayout';
-import Dashboard from './components/Dashboard/Dashboard';
-import Analytics from './components/Dashboard/Analytics';
-import Clients from './components/Dashboard/Clients';
+import PoliciesPage from './components/Sidebar/Policies';
+import RenewalsPage from './components/Sidebar/Renewals';
+import TemplatesPage from './components/Sidebar/PolicyTemplates';
+import CalculatorPage from './components/Sidebar/PolicyCalculator';
+import UnderwritingPage from './components/Sidebar/Underwriting';
+import RiskScoringPage from './components/Sidebar/RiskScoring';
+import ClaimsPage from './components/Sidebar/Claims';
+import PaymentsPage from './components/Sidebar/Payments';
+import CommissionsPage from './components/Sidebar/Commissions';
+import DocumentsPage from './components/Sidebar/DocumentManagement';
+import ReportsPage from './components/Sidebar/Reports';
+import IntegrationsPage from './components/Sidebar/Integrations';
+import SettingsPage from './components/Dashboard/settings';
+import DashboardPage from './components/Dashboard/Dashboard';
+import AnalyticsPage from './components/Dashboard/Analytics';
+import ClientsPage from './components/Dashboard/Clients';
+import ChatbotPage from './components/Sidebar/Chatbot';
 
 function App() {
   return (
@@ -16,62 +30,26 @@ function App() {
         <Route path="/" element={<HomePage />} />
         <Route path="/tailwind-test" element={<TailwindTest />} />
         
-        {/* Dashboard routes */}
-        <Route path="/dashboard" element={<Dashboard />} />
-        <Route path="/analytics" element={
-          <DashboardLayout>
-            <Analytics />
-          </DashboardLayout>
-        } />
-        <Route path="/clients" element={
-          <DashboardLayout>
-            <Clients />
-          </DashboardLayout>
-        } />
-        <Route path="/policies" element={
-          <DashboardLayout>
-            <div className="p-8 bg-seasalt min-h-screen">
-              <h1 className="font-helvetica font-bold text-2xl text-oda-blue">Policies</h1>
-              <p className="font-helvetica text-gray-600">Manage your insurance policies</p>
-              <div className="bg-white rounded-lg shadow-md p-6 mt-6">
-                <p className="font-helvetica">Policy management will be implemented soon.</p>
-              </div>
-            </div>
-          </DashboardLayout>
-        } />
-        <Route path="/claims" element={
-          <DashboardLayout>
-            <div className="p-8 bg-seasalt min-h-screen">
-              <h1 className="font-helvetica font-bold text-2xl text-oda-blue">Claims</h1>
-              <p className="font-helvetica text-gray-600">Track and manage your insurance claims</p>
-              <div className="bg-white rounded-lg shadow-md p-6 mt-6">
-                <p className="font-helvetica">Claims management will be implemented soon.</p>
-              </div>
-            </div>
-          </DashboardLayout>
-        } />
-        <Route path="/payments" element={
-          <DashboardLayout>
-            <div className="p-8 bg-seasalt min-h-screen">
-              <h1 className="font-helvetica font-bold text-2xl text-oda-blue">Payments</h1>
-              <p className="font-helvetica text-gray-600">Manage your payment methods and history</p>
-              <div className="bg-white rounded-lg shadow-md p-6 mt-6">
-                <p className="font-helvetica">Payment management will be implemented soon.</p>
-              </div>
-            </div>
-          </DashboardLayout>
-        } />
-        <Route path="/profile" element={
-          <DashboardLayout>
-            <div className="p-8 bg-seasalt min-h-screen">
-              <h1 className="font-helvetica font-bold text-2xl text-oda-blue">Profile</h1>
-              <p className="font-helvetica text-gray-600">Manage your account settings</p>
-              <div className="bg-white rounded-lg shadow-md p-6 mt-6">
-                <p className="font-helvetica">Profile management will be implemented soon.</p>
-              </div>
-            </div>
-          </DashboardLayout>
-        } />
+        {/* Protected / Dashboard routes */}
+        <Route element={<DashboardLayout />}>
+          <Route path="/dashboard" element={<DashboardPage />} />
+          <Route path="/analytics" element={<AnalyticsPage />} />
+          <Route path="/clients" element={<ClientsPage />} />
+          <Route path="/policies" element={<PoliciesPage />} />
+          <Route path="/renewals" element={<RenewalsPage />} />
+          <Route path="/policy-templates" element={<TemplatesPage />} />
+          <Route path="/policy-calculator" element={<CalculatorPage />} />
+          <Route path="/underwriting" element={<UnderwritingPage />} />
+          <Route path="/risk-scoring" element={<RiskScoringPage />} />
+          <Route path="/claims" element={<ClaimsPage />} />
+          <Route path="/payments" element={<PaymentsPage />} />
+          <Route path="/commissions" element={<CommissionsPage />} />
+          <Route path="/documents" element={<DocumentsPage />} />
+          <Route path="/reports" element={<ReportsPage />} />
+          <Route path="/integrations" element={<IntegrationsPage />} />
+          <Route path="/chatbot" element={<ChatbotPage />} />
+          <Route path="/settings/*" element={<SettingsPage />} />
+        </Route>
         
         {/* 404 route */}
         <Route path="*" element={

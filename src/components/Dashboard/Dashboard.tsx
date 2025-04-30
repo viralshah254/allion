@@ -1,11 +1,8 @@
 import React from 'react';
-import Sidebar from './Sidebar';
 
 const Dashboard: React.FC = () => {
   return (
-    <div className="flex">
-      <Sidebar />
-      <div className="flex-1 bg-seasalt min-h-screen">
+    <div className="bg-seasalt min-h-screen">
         <div className="p-8">
           <div className="mb-6">
             <h1 className="font-helvetica font-bold text-2xl text-oda-blue">Welcome to your Allion Insurance Dashboard</h1>
@@ -185,7 +182,6 @@ const Dashboard: React.FC = () => {
             </div>
           </div>
         </div>
-      </div>
     </div>
   );
 };
