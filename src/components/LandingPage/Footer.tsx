@@ -80,30 +80,12 @@ const Footer: React.FC = () => {
           <div className="col-span-1">
             <h3 className="font-helvetica font-bold text-lg mb-4">Contact</h3>
             <ul className="space-y-2">
-              <li className="font-helvetica font-light flex items-start">
-                <svg className="w-5 h-5 mr-2 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-                </svg>
-                123 Insurance Ave, New York, NY 10001
-              </li>
-              <li className="font-helvetica font-light flex items-center">
-                <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
-                </svg>
-                1-800-ALLION-1
-              </li>
-              <li className="font-helvetica font-light flex items-center">
-                <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-                </svg>
-                contact@allion.com
-              </li>
-              <li className="mt-4">
-                <button className="font-helvetica bg-auburn hover:bg-opacity-90 px-4 py-2 rounded-lg transition-colors w-full text-center">
-                  Contact Us
-                </button>
-              </li>
+              <li className="font-helvetica font-light">Allion Insurance Brokers Limited</li>
+              <li className="font-helvetica font-light">Mombasa (Head Office): Nyali Bazaar Building, Kongowea</li>
+              <li className="font-helvetica font-light">Nairobi: S&M Properties Building, Mwambao Road, Parklands</li>
+              <li className="font-helvetica font-light">Postal Address: P.O. Box 90049 Code 80100 Mombasa</li>
+              <li className="font-helvetica font-light">Tel: 0722 786881, 0716 786052</li>
+              <li className="font-helvetica font-light">Email: <a href="mailto:info@allioninsurance.com" className="hover:text-airforce-blue">info@allioninsurance.com</a></li>
             </ul>
           </div>
         </div>

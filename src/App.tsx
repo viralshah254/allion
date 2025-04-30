@@ -1,6 +1,6 @@
 import './App.css'
 
-import { BrowserRouter, Routes, Route, Outlet } from 'react-router-dom';
+import { BrowserRouter, Routes, Route} from 'react-router-dom';
 import HomePage from './components/LandingPage/HomePage';
 import TailwindTest from './components/TailwindTest';
 import DashboardLayout from './components/Dashboard/DashboardLayout';
