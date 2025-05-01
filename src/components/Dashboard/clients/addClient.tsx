@@ -51,7 +51,12 @@ const AddClient: React.FC = () => {
     }
 
     if (field === 'dateOfBirth') {
-      const value = updatedData.dateOfBirth;
+      // Auto-format slashes as user types
+      let value = updatedData.dateOfBirth.replace(/\D/g, '').slice(0, 8); // only digits
+      if (value.length >= 5) value = `${value.slice(0, 2)}/${value.slice(2, 4)}/${value.slice(4)}`;
+      else if (value.length >= 3) value = `${value.slice(0, 2)}/${value.slice(2)}`;
+      updatedData.dateOfBirth = value;
+
       const regex = /^(\d{2})\/(\d{2})\/(\d{4})$/;
       const match = value.match(regex);
       const currentYear = new Date().getFullYear();

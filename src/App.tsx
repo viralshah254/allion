@@ -19,11 +19,11 @@ import IntegrationsPage from './components/Sidebar/Integrations';
 import SettingsPage from './components/Dashboard/settings';
 import DashboardPage from './components/Dashboard/Dashboard';
 import AnalyticsPage from './components/Dashboard/Analytics';
-import ClientsPage from './components/Dashboard/Clients';
+import ClientsPage from './components/Dashboard/clients/Clients';
 import ChatbotPage from './components/Sidebar/Chatbot';
 import ForecastingPage from './components/Sidebar/Forecasting';
 import RiskManagementPage from './components/Sidebar/RiskManagement';
-import AddClient from './components/Dashboard/addClient';
+import AddClient from './components/Dashboard/clients/addClient';
 import InsuranceCompanies from './components/Sidebar/insurancecompanies';
 import AddInsuranceCompany from './components/insurancecompanies/addinsuranceCompany';
 function App() {

@@ -1,8 +1,7 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 
 const Dashboard: React.FC = () => {
-  const [viewCategory, setViewCategory] = useState<'non-life' | 'life'>('non-life');
 
   const monthlyPremium = 12757373.50;
   const totalCommissions = parseFloat((monthlyPremium * 0.1).toFixed(2));
@@ -62,70 +61,36 @@ const Dashboard: React.FC = () => {
           </div>
 
           {/* Policy Breakdown Toggle */}
-          <div className="flex justify-center items-center mb-6 space-x-4">
-            <button
-              onClick={() => setViewCategory('non-life')}
-              className={`px-4 py-2 rounded-lg font-helvetica ${
-                viewCategory === 'non-life'
-                  ? 'bg-oda-blue text-white'
-                  : 'bg-gray-200 text-gray-700'
-              }`}
-            >
-              Non‑Life
-            </button>
-            <button
-              onClick={() => setViewCategory('life')}
-              className={`px-4 py-2 rounded-lg font-helvetica ${
-                viewCategory === 'life'
-                  ? 'bg-oda-blue text-white'
-                  : 'bg-gray-200 text-gray-700'
-              }`}
-            >
-              Life
-            </button>
-          </div>
+
 
           {/* Policy Type Breakdown */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-            {viewCategory === 'non-life' ? (
-              <>
-                <div className="bg-white rounded-lg shadow-md p-5 border-t-4 border-airforce-blue">
-                  <p className="font-helvetica text-sm text-gray-500 mb-1">Motor</p>
-                  <p className="font-helvetica font-bold text-2xl text-oda-blue">18</p>
-                </div>
-                <div className="bg-white rounded-lg shadow-md p-5 border-t-4 border-auburn">
-                  <p className="font-helvetica text-sm text-gray-500 mb-1">Goods in Transit</p>
-                  <p className="font-helvetica font-bold text-2xl text-oda-blue">7</p>
-                </div>
-                <div className="bg-white rounded-lg shadow-md p-5 border-t-4 border-oda-indigo">
-                  <p className="font-helvetica text-sm text-gray-500 mb-1">Marine</p>
-                  <p className="font-helvetica font-bold text-2xl text-oda-blue">4</p>
-                </div>
-                <div className="bg-white rounded-lg shadow-md p-5 border-t-4 border-green-500">
-                  <p className="font-helvetica text-sm text-gray-500 mb-1">Property</p>
-                  <p className="font-helvetica font-bold text-2xl text-oda-blue">12</p>
-                </div>
-              </>
-            ) : (
-              <>
-                <div className="bg-white rounded-lg shadow-md p-5 border-t-4 border-teal-500">
-                  <p className="font-helvetica text-sm text-gray-500 mb-1">Term Life</p>
-                  <p className="font-helvetica font-bold text-2xl text-oda-blue">25</p>
-                </div>
-                <div className="bg-white rounded-lg shadow-md p-5 border-t-4 border-purple-500">
-                  <p className="font-helvetica text-sm text-gray-500 mb-1">Whole Life</p>
-                  <p className="font-helvetica font-bold text-2xl text-oda-blue">9</p>
-                </div>
-                <div className="bg-white rounded-lg shadow-md p-5 border-t-4 border-auburn">
-                  <p className="font-helvetica text-sm text-gray-500 mb-1">Endowment</p>
-                  <p className="font-helvetica font-bold text-2xl text-oda-blue">6</p>
-                </div>
-                <div className="bg-white rounded-lg shadow-md p-5 border-t-4 border-airforce-blue">
-                  <p className="font-helvetica text-sm text-gray-500 mb-1">Group Life</p>
-                  <p className="font-helvetica font-bold text-2xl text-oda-blue">15</p>
-                </div>
-              </>
-            )}
+            <>
+              <div className="bg-white rounded-lg shadow-md p-5 border-t-4 border-airforce-blue">
+                <p className="font-helvetica font-bold text-sm text-gray-500 mb-1">Motor</p>
+                <p className="font-helvetica text-sm text-gray-500 mb-1">Total Policies</p>
+                <p className="font-helvetica font-bold text-2xl text-oda-blue">18</p>
+                <p className="font-helvetica text-sm text-gray-500 mt-2">Upcoming Renewals: 4</p>
+              </div>
+              <div className="bg-white rounded-lg shadow-md p-5 border-t-4 border-auburn">
+                <p className="font-helvetica font-bold text-sm text-gray-500 mb-1">Goods in Transit</p>
+                <p className="font-helvetica text-sm text-gray-500 mb-1">Total Policies</p>
+                <p className="font-helvetica font-bold text-2xl text-oda-blue">7</p>
+                <p className="font-helvetica text-sm text-gray-500 mt-2">Upcoming Renewals: 2</p>
+              </div>
+              <div className="bg-white rounded-lg shadow-md p-5 border-t-4 border-oda-indigo">
+                <p className="font-helvetica font-bold text-sm text-gray-500 mb-1">Marine</p>
+                <p className="font-helvetica text-sm text-gray-500 mb-1">Total Policies</p>
+                <p className="font-helvetica font-bold text-2xl text-oda-blue">4</p>
+                <p className="font-helvetica text-sm text-gray-500 mt-2">Upcoming Renewals: 1</p>
+              </div>
+              <div className="bg-white rounded-lg shadow-md p-5 border-t-4 border-green-500">
+                <p className="font-helvetica font-bold text-sm text-gray-500 mb-1">Property</p>
+                <p className="font-helvetica text-sm text-gray-500 mb-1">Total Policies</p>
+                <p className="font-helvetica font-bold text-2xl text-oda-blue">12</p>
+                <p className="font-helvetica text-sm text-gray-500 mt-2">Upcoming Renewals: 3</p>
+              </div>
+            </>
           </div>
 
           {/* Trend Charts */}
