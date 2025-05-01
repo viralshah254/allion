@@ -16,7 +16,9 @@ const Dashboard: React.FC = () => {
             <div className="space-x-4">
               <button className="bg-oda-blue text-white px-4 py-2 rounded-lg hover:bg-opacity-90">New Policy</button>
               <button className="bg-oda-blue text-white px-4 py-2 rounded-lg hover:bg-opacity-90">Log Claim</button>
-              <button className="bg-oda-blue text-white px-4 py-2 rounded-lg hover:bg-opacity-90">Add Client</button>
+              <Link to="/dashboard/add-client" className="bg-oda-blue text-white px-4 py-2 rounded-lg hover:bg-opacity-90">
+                Add Client
+              </Link>
             </div>
           </div>
 

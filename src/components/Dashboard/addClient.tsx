@@ -179,7 +179,7 @@ const AddClient: React.FC = () => {
                     setIndividualCompanyStepComplete(false);
                   }}
                 >
-                  Company
+                  Group
                 </button>
               </div>
             </div>
