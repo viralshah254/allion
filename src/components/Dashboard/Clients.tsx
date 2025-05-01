@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 // Sample client data
 const initialClients = [
@@ -9,6 +10,14 @@ const initialClients = [
     phone: "(555) 123-4567",
     policies: ["Auto", "Home"],
     status: "Active",
+    type: "Individual",
+    group: "Group A",
+    referredBy: "Jane Smith",
+    kyc: {
+      id: true,
+      kraPin: true,
+      addressProof: false
+    }
   },
   {
     id: 2, 
@@ -17,6 +26,14 @@ const initialClients = [
     phone: "(555) 987-6543",
     policies: ["Auto", "Life"],
     status: "Active",
+    type: "Individual",
+    group: "Group B",
+    referredBy: "Michael Brown",
+    kyc: {
+      id: true,
+      kraPin: true,
+      addressProof: true
+    }
   },
   {
     id: 3,
@@ -25,6 +42,14 @@ const initialClients = [
     phone: "(555) 456-7890",
     policies: ["Home", "Life", "Business"],
     status: "Active",
+    type: "Business",
+    group: "Group A",
+    referredBy: "Emily Williams",
+    kyc: {
+      id: true,
+      kraPin: false,
+      addressProof: true
+    }
   },
   {
     id: 4,
@@ -33,6 +58,14 @@ const initialClients = [
     phone: "(555) 246-8135",
     policies: ["Auto"],
     status: "Pending",
+    type: "Individual",
+    group: "Group C",
+    referredBy: "",
+    kyc: {
+      id: false,
+      kraPin: false,
+      addressProof: false
+    }
   },
   {
     id: 5,
@@ -41,12 +74,21 @@ const initialClients = [
     phone: "(555) 369-2581",
     policies: ["Life"],
     status: "Active",
+    type: "Individual",
+    group: "Group B",
+    referredBy: "John Doe",
+    kyc: {
+      id: true,
+      kraPin: true,
+      addressProof: true
+    }
   }
 ];
 
 const Clients: React.FC = () => {
   const [clients] = useState(initialClients);
   const [searchTerm, setSearchTerm] = useState('');
+  const navigate = useNavigate();
   
   // Filter clients based on search term
   const filteredClients = clients.filter(client => 
@@ -77,7 +119,10 @@ const Clients: React.FC = () => {
           </svg>
         </div>
         
-        <button className="w-full md:w-auto font-helvetica bg-oda-blue hover:bg-opacity-90 text-white px-4 py-2 rounded-lg transition-colors">
+        <button
+          onClick={() => navigate('/dashboard/add-client')}
+          className="w-full md:w-auto font-helvetica bg-oda-blue hover:bg-opacity-90 text-white px-4 py-2 rounded-lg transition-colors"
+        >
           Add New Client
         </button>
       </div>
@@ -92,6 +137,10 @@ const Clients: React.FC = () => {
                 <th className="p-4 font-helvetica font-bold text-oda-blue">Contact</th>
                 <th className="p-4 font-helvetica font-bold text-oda-blue">Policies</th>
                 <th className="p-4 font-helvetica font-bold text-oda-blue">Status</th>
+                <th className="p-4 font-helvetica font-bold text-oda-blue">Type</th>
+                <th className="p-4 font-helvetica font-bold text-oda-blue">Group</th>
+                <th className="p-4 font-helvetica font-bold text-oda-blue">Referred By</th>
+                <th className="p-4 font-helvetica font-bold text-oda-blue">KYC Status</th>
                 <th className="p-4 font-helvetica font-bold text-oda-blue text-right">Actions</th>
               </tr>
             </thead>
@@ -127,6 +176,22 @@ const Clients: React.FC = () => {
                         {client.status}
                       </span>
                     </td>
+                    <td className="p-4 font-helvetica">{client.type}</td>
+                    <td className="p-4 font-helvetica underline text-oda-blue cursor-pointer" onClick={() => alert(`Group: ${client.group}`)}>
+                      {client.group || '—'}
+                    </td>
+                    <td className="p-4 font-helvetica underline text-oda-blue cursor-pointer" onClick={() => alert(`Referred by: ${client.referredBy}`)}>
+                      {client.referredBy || '—'}
+                    </td>
+                    <td className="p-4">
+                      <span className={`px-2 py-1 text-xs font-helvetica rounded-full ${
+                        Object.values(client.kyc).every(Boolean) 
+                          ? 'bg-green-100 text-green-800' 
+                          : 'bg-red-100 text-red-800'
+                      }`}>
+                        {Object.values(client.kyc).every(Boolean) ? 'Complete' : 'Incomplete'}
+                      </span>
+                    </td>
                     <td className="p-4 text-right">
                       <div className="flex justify-end space-x-2">
                         <button className="p-1 text-gray-500 hover:text-oda-blue">
@@ -151,7 +216,7 @@ const Clients: React.FC = () => {
                 ))
               ) : (
                 <tr>
-                  <td colSpan={5} className="p-4 text-center font-helvetica text-gray-500">
+                  <td colSpan={8} className="p-4 text-center font-helvetica text-gray-500">
                     No clients found matching your search.
                   </td>
                 </tr>

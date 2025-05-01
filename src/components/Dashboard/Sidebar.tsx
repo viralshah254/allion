@@ -52,6 +52,25 @@ const Sidebar: React.FC = () => {
       ],
     },
     {
+      name: 'Insurance Companies',
+      icon: (
+        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h10a2 2 0 012 2v10a2 2 0 01-2 2z" />
+        </svg>
+      ),
+      children: [
+        {
+          name: 'Insurance Companies',
+          path: '/insurance-companies',
+          icon: (
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h10a2 2 0 012 2v10a2 2 0 01-2 2z" />
+            </svg>
+          )
+        }
+      ]
+    },
+    {
       name: 'Policy Management',
       icon: (
         <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -185,6 +204,34 @@ const Sidebar: React.FC = () => {
       ],
     },
     {
+      name: 'Strategy',
+      icon: (
+        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 17l6-6 4 4 8-8" />
+        </svg>
+      ),
+      children: [
+        {
+          name: 'Forecasting',
+          path: '/forecasting',
+          icon: (
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 3v18h18" />
+            </svg>
+          )
+        },
+        {
+          name: 'Risk Management',
+          path: '/risk-management',
+          icon: (
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+            </svg>
+          )
+        },
+      ],
+    },
+    {
       name: 'Integrations',
       icon: (
         <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -196,6 +243,15 @@ const Sidebar: React.FC = () => {
     },
     {
       name: 'Support',
+      icon: (
+        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 10h.01M12 10h.01M16 10h.01M9 16h6M12 12v4m0 0a4 4 0 11-8 0 4 4 0 018 0z" />
+        </svg>
+      ),
+      path: '/chatbot',
+    },
+    {
+      name: 'Web Inquiries',
       icon: (
         <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 10h.01M12 10h.01M16 10h.01M9 16h6M12 12v4m0 0a4 4 0 11-8 0 4 4 0 018 0z" />
@@ -220,6 +276,7 @@ const Sidebar: React.FC = () => {
             </svg>
           )
         },
+        
       ],
     },
   ];

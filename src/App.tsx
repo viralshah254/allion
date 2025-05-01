@@ -21,7 +21,11 @@ import DashboardPage from './components/Dashboard/Dashboard';
 import AnalyticsPage from './components/Dashboard/Analytics';
 import ClientsPage from './components/Dashboard/Clients';
 import ChatbotPage from './components/Sidebar/Chatbot';
-
+import ForecastingPage from './components/Sidebar/Forecasting';
+import RiskManagementPage from './components/Sidebar/RiskManagement';
+import AddClient from './components/Dashboard/addClient';
+import InsuranceCompanies from './components/Sidebar/insurancecompanies';
+import AddInsuranceCompany from './components/insurancecompanies/addinsuranceCompany';
 function App() {
   return (
     <BrowserRouter>
@@ -33,6 +37,8 @@ function App() {
         {/* Protected / Dashboard routes */}
         <Route element={<DashboardLayout />}>
           <Route path="/dashboard" element={<DashboardPage />} />
+          <Route path="/dashboard/add-client" element={<AddClient />} />
+          <Route path="/dashboard/add-insurance-company" element={<AddInsuranceCompany />} />
           <Route path="/analytics" element={<AnalyticsPage />} />
           <Route path="/clients" element={<ClientsPage />} />
           <Route path="/policies" element={<PoliciesPage />} />
@@ -47,8 +53,12 @@ function App() {
           <Route path="/documents" element={<DocumentsPage />} />
           <Route path="/reports" element={<ReportsPage />} />
           <Route path="/integrations" element={<IntegrationsPage />} />
+          <Route path="/forecasting" element={<ForecastingPage />} />
+          <Route path="/risk-management" element={<RiskManagementPage />} />
           <Route path="/chatbot" element={<ChatbotPage />} />
           <Route path="/settings/*" element={<SettingsPage />} />
+          <Route path="/insurance-companies" element={<InsuranceCompanies />} />
+          
         </Route>
         
         {/* 404 route */}

@@ -1,184 +1,216 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 
 const Dashboard: React.FC = () => {
+  const [viewCategory, setViewCategory] = useState<'non-life' | 'life'>('non-life');
+
+  const monthlyPremium = 12757373.50;
+  const totalCommissions = parseFloat((monthlyPremium * 0.1).toFixed(2));
+
   return (
     <div className="bg-seasalt min-h-screen">
         <div className="p-8">
-          <div className="mb-6">
-            <h1 className="font-helvetica font-bold text-2xl text-oda-blue">Welcome to your Allion Insurance Dashboard</h1>
-            <p className="font-helvetica text-gray-600">Track your policies, claims, and insurance metrics</p>
+          {/* Header Actions */}
+          <div className="flex justify-between items-center mb-6">
+            <h1 className="font-helvetica font-bold text-2xl text-oda-blue">Welcome to Allion Brokerage Dashboard</h1>
+            <div className="space-x-4">
+              <button className="bg-oda-blue text-white px-4 py-2 rounded-lg hover:bg-opacity-90">New Policy</button>
+              <button className="bg-oda-blue text-white px-4 py-2 rounded-lg hover:bg-opacity-90">Log Claim</button>
+              <button className="bg-oda-blue text-white px-4 py-2 rounded-lg hover:bg-opacity-90">Add Client</button>
+            </div>
           </div>
 
-          {/* Summary Cards */}
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+          {/* Alert Banner */}
+          <div className="bg-yellow-100 border-l-4 border-yellow-500 text-yellow-700 p-4 mb-6">
+            <p className="font-helvetica text-sm">⚠️ 2 policies expiring in 5 days · 1 high-value claim pending review</p>
+          </div>
+
+          {/* KPI Strip */}
+          <div className="grid grid-cols-1 md:grid-cols-5 gap-6 mb-8">
+            {/* Active Policies */}
             <div className="bg-white rounded-lg shadow-md p-5 border-t-4 border-airforce-blue">
               <p className="font-helvetica text-sm text-gray-500 mb-1">Active Policies</p>
               <p className="font-helvetica font-bold text-2xl text-oda-blue">4</p>
-              <p className="font-helvetica text-xs text-gray-400 mt-2">2 Auto, 1 Home, 1 Life</p>
             </div>
+            {/* Monthly Premium */}
             <div className="bg-white rounded-lg shadow-md p-5 border-t-4 border-auburn">
-              <p className="font-helvetica text-sm text-gray-500 mb-1">Premium Value</p>
-              <p className="font-helvetica font-bold text-2xl text-oda-blue">$1,275.50</p>
-              <p className="font-helvetica text-xs text-gray-400 mt-2">Monthly payment</p>
+              <p className="font-helvetica text-sm text-gray-500 mb-1">Monthly Premium</p>
+              <p className="font-helvetica font-bold text-2xl text-oda-blue">
+                {`KES ${monthlyPremium.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`}
+              </p>
             </div>
+            {/* Loss Ratio */}
+            <div className="bg-white rounded-lg shadow-md p-5 border-t-4 border-red-500">
+              <p className="font-helvetica text-sm text-gray-500 mb-1">Loss Ratio (YTD)</p>
+              <p className="font-helvetica font-bold text-2xl text-oda-blue">42%</p>
+            </div>
+            {/* Open Claims */}
             <div className="bg-white rounded-lg shadow-md p-5 border-t-4 border-oda-indigo">
               <p className="font-helvetica text-sm text-gray-500 mb-1">Open Claims</p>
               <p className="font-helvetica font-bold text-2xl text-oda-blue">1</p>
-              <p className="font-helvetica text-xs text-gray-400 mt-2">Auto claim #A-78945</p>
             </div>
-            <div className="bg-white rounded-lg shadow-md p-5 border-t-4 border-green-500">
-              <p className="font-helvetica text-sm text-gray-500 mb-1">Coverage Amount</p>
-              <p className="font-helvetica font-bold text-2xl text-oda-blue">$750,000</p>
-              <p className="font-helvetica text-xs text-gray-400 mt-2">Total protection</p>
+            {/* Total Commissions */}
+            <div className="bg-white rounded-lg shadow-md p-5 border-t-4 border-amber-500">
+              <p className="font-helvetica text-sm text-gray-500 mb-1">Total Commissions</p>
+              <p className="font-helvetica font-bold text-2xl text-oda-blue">
+                {`KES ${totalCommissions.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`}
+              </p>
+              <p className="font-helvetica text-xs text-gray-400 mt-2">Earned this month</p>
             </div>
           </div>
 
-          {/* Filters */}
-          <div className="flex items-center space-x-4 mb-8">
-            <select className="border border-gray-300 rounded-lg p-2 font-helvetica text-gray-700">
-              <option>Last 30 Days</option>
-              <option>Last 90 Days</option>
-              <option>Last Year</option>
-              <option>All Time</option>
-            </select>
-            <input
-              type="text"
-              placeholder="Search policies, claims, or documents..."
-              className="flex-1 border border-gray-300 rounded-lg p-2 font-helvetica"
-            />
+          {/* Policy Breakdown Toggle */}
+          <div className="flex justify-center items-center mb-6 space-x-4">
+            <button
+              onClick={() => setViewCategory('non-life')}
+              className={`px-4 py-2 rounded-lg font-helvetica ${
+                viewCategory === 'non-life'
+                  ? 'bg-oda-blue text-white'
+                  : 'bg-gray-200 text-gray-700'
+              }`}
+            >
+              Non‑Life
+            </button>
+            <button
+              onClick={() => setViewCategory('life')}
+              className={`px-4 py-2 rounded-lg font-helvetica ${
+                viewCategory === 'life'
+                  ? 'bg-oda-blue text-white'
+                  : 'bg-gray-200 text-gray-700'
+              }`}
+            >
+              Life
+            </button>
           </div>
 
-          {/* Charts & Lists */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          {/* Policy Type Breakdown */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+            {viewCategory === 'non-life' ? (
+              <>
+                <div className="bg-white rounded-lg shadow-md p-5 border-t-4 border-airforce-blue">
+                  <p className="font-helvetica text-sm text-gray-500 mb-1">Motor</p>
+                  <p className="font-helvetica font-bold text-2xl text-oda-blue">18</p>
+                </div>
+                <div className="bg-white rounded-lg shadow-md p-5 border-t-4 border-auburn">
+                  <p className="font-helvetica text-sm text-gray-500 mb-1">Goods in Transit</p>
+                  <p className="font-helvetica font-bold text-2xl text-oda-blue">7</p>
+                </div>
+                <div className="bg-white rounded-lg shadow-md p-5 border-t-4 border-oda-indigo">
+                  <p className="font-helvetica text-sm text-gray-500 mb-1">Marine</p>
+                  <p className="font-helvetica font-bold text-2xl text-oda-blue">4</p>
+                </div>
+                <div className="bg-white rounded-lg shadow-md p-5 border-t-4 border-green-500">
+                  <p className="font-helvetica text-sm text-gray-500 mb-1">Property</p>
+                  <p className="font-helvetica font-bold text-2xl text-oda-blue">12</p>
+                </div>
+              </>
+            ) : (
+              <>
+                <div className="bg-white rounded-lg shadow-md p-5 border-t-4 border-teal-500">
+                  <p className="font-helvetica text-sm text-gray-500 mb-1">Term Life</p>
+                  <p className="font-helvetica font-bold text-2xl text-oda-blue">25</p>
+                </div>
+                <div className="bg-white rounded-lg shadow-md p-5 border-t-4 border-purple-500">
+                  <p className="font-helvetica text-sm text-gray-500 mb-1">Whole Life</p>
+                  <p className="font-helvetica font-bold text-2xl text-oda-blue">9</p>
+                </div>
+                <div className="bg-white rounded-lg shadow-md p-5 border-t-4 border-auburn">
+                  <p className="font-helvetica text-sm text-gray-500 mb-1">Endowment</p>
+                  <p className="font-helvetica font-bold text-2xl text-oda-blue">6</p>
+                </div>
+                <div className="bg-white rounded-lg shadow-md p-5 border-t-4 border-airforce-blue">
+                  <p className="font-helvetica text-sm text-gray-500 mb-1">Group Life</p>
+                  <p className="font-helvetica font-bold text-2xl text-oda-blue">15</p>
+                </div>
+              </>
+            )}
+          </div>
+
+          {/* Trend Charts */}
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
             <div className="bg-white rounded-lg shadow-md p-5">
-              <h3 className="font-helvetica font-bold text-oda-blue mb-4">Policy Overview</h3>
-              <div className="space-y-4">
-                <div className="flex justify-between items-center p-3 bg-gray-50 rounded">
-                  <div>
-                    <p className="font-helvetica font-bold">Auto Insurance</p>
-                    <p className="font-helvetica text-sm text-gray-500">2019 Toyota Camry</p>
-                  </div>
-                  <div className="text-right">
-                    <p className="font-helvetica font-bold text-airforce-blue">$150/month</p>
-                    <p className="font-helvetica text-xs text-gray-500">Renews: 10/15/2025</p>
-                  </div>
-                </div>
-                <div className="flex justify-between items-center p-3 bg-gray-50 rounded">
-                  <div>
-                    <p className="font-helvetica font-bold">Auto Insurance</p>
-                    <p className="font-helvetica text-sm text-gray-500">2022 Honda CR-V</p>
-                  </div>
-                  <div className="text-right">
-                    <p className="font-helvetica font-bold text-airforce-blue">$175/month</p>
-                    <p className="font-helvetica text-xs text-gray-500">Renews: 08/22/2025</p>
-                  </div>
-                </div>
-                <div className="flex justify-between items-center p-3 bg-gray-50 rounded">
-                  <div>
-                    <p className="font-helvetica font-bold">Home Insurance</p>
-                    <p className="font-helvetica text-sm text-gray-500">123 Main Street</p>
-                  </div>
-                  <div className="text-right">
-                    <p className="font-helvetica font-bold text-airforce-blue">$225/month</p>
-                    <p className="font-helvetica text-xs text-gray-500">Renews: 09/01/2025</p>
-                  </div>
-                </div>
-                <div className="flex justify-between items-center p-3 bg-gray-50 rounded">
-                  <div>
-                    <p className="font-helvetica font-bold">Life Insurance</p>
-                    <p className="font-helvetica text-sm text-gray-500">Term Life - 20 Years</p>
-                  </div>
-                  <div className="text-right">
-                    <p className="font-helvetica font-bold text-airforce-blue">$725.50/month</p>
-                    <p className="font-helvetica text-xs text-gray-500">Renews: 11/30/2025</p>
-                  </div>
-                </div>
-              </div>
+              <h3 className="font-helvetica font-bold text-oda-blue mb-4">Premiums Over Time</h3>
+              <div className="h-40 flex items-center justify-center text-gray-400">[Sparkline Chart]</div>
             </div>
-            
             <div className="bg-white rounded-lg shadow-md p-5">
-              <h3 className="font-helvetica font-bold text-oda-blue mb-4">Recent Claims Activity</h3>
-              
-              <div className="space-y-4">
-                <div className="flex justify-between items-center p-3 bg-yellow-50 rounded border-l-4 border-yellow-400">
-                  <div>
-                    <p className="font-helvetica font-bold">Claim #A-78945</p>
-                    <p className="font-helvetica text-sm text-gray-500">Auto - Minor accident</p>
-                  </div>
-                  <div className="text-right">
-                    <p className="font-helvetica font-bold text-yellow-600">In Progress</p>
-                    <p className="font-helvetica text-xs text-gray-500">Filed: 04/10/2025</p>
-                  </div>
-                </div>
-                
-                <div className="flex justify-between items-center p-3 bg-green-50 rounded border-l-4 border-green-400">
-                  <div>
-                    <p className="font-helvetica font-bold">Claim #H-45612</p>
-                    <p className="font-helvetica text-sm text-gray-500">Home - Water damage</p>
-                  </div>
-                  <div className="text-right">
-                    <p className="font-helvetica font-bold text-green-600">Approved</p>
-                    <p className="font-helvetica text-xs text-gray-500">Filed: 02/15/2025</p>
-                  </div>
-                </div>
-                
-                <div className="flex justify-between items-center p-3 bg-green-50 rounded border-l-4 border-green-400">
-                  <div>
-                    <p className="font-helvetica font-bold">Claim #A-65478</p>
-                    <p className="font-helvetica text-sm text-gray-500">Auto - Windshield replacement</p>
-                  </div>
-                  <div className="text-right">
-                    <p className="font-helvetica font-bold text-green-600">Paid</p>
-                    <p className="font-helvetica text-xs text-gray-500">Filed: 01/05/2025</p>
-                  </div>
-                </div>
-                
-                <div className="mt-6 text-center">
-                  <button className="font-helvetica bg-oda-blue hover:bg-opacity-90 text-white px-4 py-2 rounded-lg transition-colors">
-                    View All Claims
-                  </button>
-                </div>
-              </div>
+              <h3 className="font-helvetica font-bold text-oda-blue mb-4">Policies Issued</h3>
+              <div className="h-40 flex items-center justify-center text-gray-400">[Sparkline Chart]</div>
+            </div>
+            <div className="bg-white rounded-lg shadow-md p-5">
+              <h3 className="font-helvetica font-bold text-oda-blue mb-4">Claims Frequency</h3>
+              <div className="h-40 flex items-center justify-center text-gray-400">[Sparkline Chart]</div>
             </div>
           </div>
-          
-          {/* Payment and Coverage Summary */}
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mt-8">
-            <div className="bg-white rounded-lg shadow-md p-5 col-span-2">
-              <h3 className="font-helvetica font-bold text-oda-blue mb-4">Coverage Distribution</h3>
-              <div className="h-64 flex items-center justify-center text-gray-400">
-                {/* Placeholder for pie chart */}
-                <div className="text-center">
-                  <svg className="w-12 h-12 mx-auto mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 3.055A9.001 9.001 0 1020.945 13H11V3.055z" />
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20.488 9H15V3.512A9.025 9.025 0 0120.488 9z" />
-                  </svg>
-                  <p className="font-helvetica">Coverage distribution chart will appear here</p>
-                </div>
-              </div>
-            </div>
-            
-            <div className="bg-white rounded-lg shadow-md p-5">
-              <h3 className="font-helvetica font-bold text-oda-blue mb-4">Payment Schedule</h3>
-              <div className="space-y-3">
-                <div className="flex justify-between">
-                  <p className="font-helvetica">Next payment:</p>
-                  <p className="font-helvetica font-bold">May 1, 2025</p>
-                </div>
-                <div className="flex justify-between">
-                  <p className="font-helvetica">Amount due:</p>
-                  <p className="font-helvetica font-bold">$1,275.50</p>
-                </div>
-                <div className="flex justify-between">
-                  <p className="font-helvetica">Payment method:</p>
-                  <p className="font-helvetica">VISA •••• 4589</p>
-                </div>
-                <div className="mt-6">
-                  <button className="font-helvetica bg-auburn hover:bg-opacity-90 text-white px-4 py-2 rounded-lg transition-colors w-full">
-                    Make a Payment
-                  </button>
-                </div>
-              </div>
+
+          {/* Tasks & Notifications */}
+          <div className="bg-white rounded-lg shadow-md p-5 mb-8">
+            <h3 className="font-helvetica font-bold text-oda-blue mb-3">Pending Actions</h3>
+            <ul className="list-disc list-inside">
+              <li className="font-helvetica text-sm">Approve claim #A-78945</li>
+              <li className="font-helvetica text-sm">Renew policy POL456 by 08/22/2025</li>
+              <li className="font-helvetica text-sm">Review new client application for Acme Co.</li>
+            </ul>
+          </div>
+
+          {/* Agent Leaderboard */}
+          <div className="bg-white rounded-lg shadow-md p-5 mb-8">
+            <h3 className="font-helvetica font-bold text-oda-blue mb-3">Top Agents</h3>
+            <table className="min-w-full table-auto">
+              <thead>
+                <tr className="bg-gray-100">
+                  <th className="px-4 py-2 text-left">Agent</th>
+                  <th className="px-4 py-2 text-right">Premium Sold</th>
+                  <th className="px-4 py-2 text-right">Commissions</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr className="hover:bg-gray-50">
+                  <td className="border px-4 py-2">Jane Smith</td>
+                  <td className="border px-4 py-2 text-right">KES 120,000</td>
+                  <td className="border px-4 py-2 text-right">KES 12,000</td>
+                </tr>
+                <tr className="hover:bg-gray-50">
+                  <td className="border px-4 py-2">John Doe</td>
+                  <td className="border px-4 py-2 text-right">KES 85,000</td>
+                  <td className="border px-4 py-2 text-right">KES 8,500</td>
+                </tr>
+                <tr className="hover:bg-gray-50">
+                  <td className="border px-4 py-2">Mary Wanjiku</td>
+                  <td className="border px-4 py-2 text-right">KES 60,000</td>
+                  <td className="border px-4 py-2 text-right">KES 6,000</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          {/* Quick Access Shortcuts */}
+          <div className="mt-8 p-8 bg-seasalt">
+            <h3 className="font-helvetica font-bold text-oda-blue text-xl mb-4">Quick Access</h3>
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
+              <Link to="/clients" className="bg-white p-4 rounded-lg shadow hover:bg-gray-50 flex items-center justify-center">
+                <span className="font-helvetica font-bold">All Clients</span>
+              </Link>
+              <Link to="/policies" className="bg-white p-4 rounded-lg shadow hover:bg-gray-50 flex items-center justify-center">
+                <span className="font-helvetica font-bold">All Policies</span>
+              </Link>
+              <Link to="/renewals" className="bg-white p-4 rounded-lg shadow hover:bg-gray-50 flex items-center justify-center">
+                <span className="font-helvetica font-bold">Renewals</span>
+              </Link>
+              <Link to="/claims" className="bg-white p-4 rounded-lg shadow hover:bg-gray-50 flex items-center justify-center">
+                <span className="font-helvetica font-bold">Claims</span>
+              </Link>
+              <Link to="/commissions" className="bg-white p-4 rounded-lg shadow hover:bg-gray-50 flex items-center justify-center">
+                <span className="font-helvetica font-bold">Commissions</span>
+              </Link>
+              <Link to="/reports" className="bg-white p-4 rounded-lg shadow hover:bg-gray-50 flex items-center justify-center">
+                <span className="font-helvetica font-bold">Reports</span>
+              </Link>
+              <Link to="/policy-templates" className="bg-white p-4 rounded-lg shadow hover:bg-gray-50 flex items-center justify-center">
+                <span className="font-helvetica font-bold">Templates</span>
+              </Link>
+              <Link to="/policy-calculator" className="bg-white p-4 rounded-lg shadow hover:bg-gray-50 flex items-center justify-center">
+                <span className="font-helvetica font-bold">Calculator</span>
+              </Link>
             </div>
           </div>
         </div>
