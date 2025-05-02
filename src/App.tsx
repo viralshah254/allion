@@ -26,6 +26,7 @@ import RiskManagementPage from './components/Sidebar/RiskManagement';
 import AddClient from './components/Dashboard/clients/addClient';
 import InsuranceCompanies from './components/Sidebar/insurancecompanies';
 import AddInsuranceCompany from './components/insurancecompanies/addinsuranceCompany';
+import AddPolicy from './components/Dashboard/policies/addPolicyTemplate';
 function App() {
   return (
     <BrowserRouter>
@@ -58,6 +59,7 @@ function App() {
           <Route path="/chatbot" element={<ChatbotPage />} />
           <Route path="/settings/*" element={<SettingsPage />} />
           <Route path="/insurance-companies" element={<InsuranceCompanies />} />
+          <Route path="/add-policy" element={<AddPolicy />} />
           
         </Route>
         

@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 
 interface Template {
   id: string;
@@ -27,6 +28,14 @@ const PolicyTemplates: React.FC = () => {
   return (
     <div className="p-6 bg-white rounded-lg shadow">
       <h1 className="text-2xl font-bold mb-4">Policy Templates</h1>
+      <div className="mb-6">
+        <Link
+          to="/add-policy"
+          className="inline-block px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
+        >
+          Add Policy
+        </Link>
+      </div>
       <table className="min-w-full table-auto border-collapse">
         <thead>
           <tr className="bg-gray-100">
