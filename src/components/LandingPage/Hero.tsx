@@ -1,7 +1,66 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import fetchJsonp from 'fetch-jsonp';
 import { Link } from 'react-router-dom';
 
+const KENYAN_MAKES = [
+  'Toyota', 'Nissan', 'Mitsubishi', 'Isuzu', 'Ford',
+  'Honda', 'Mazda', 'Mercedes-Benz', 'BMW', 'Volkswagen',
+  'Subaru', 'Chevrolet', 'Kia', 'Hyundai', 'Suzuki',
+  'Land Rover', 'GMC', 'Volvo', 'Daihatsu', 'Jeep'
+];
+
 const Hero: React.FC = () => {
+  const [showModal, setShowModal] = useState(false);
+  const [firstName, setFirstName] = useState('');
+  const [phone, setPhone] = useState('');
+  const [insuranceType, setInsuranceType] = useState<'Motor' | 'Health' | ''>('');
+  const [vehicleMake, setVehicleMake] = useState('');
+  const [vehicleModel, setVehicleModel] = useState('');
+  const [vehicleYear, setVehicleYear] = useState('');
+  const [estimatedValue, setEstimatedValue] = useState('');
+
+  const [makes, setMakes] = useState<{make_id: string; make_display: string;}[]>([]);
+  const [models, setModels] = useState<{model_name: string;}[]>([]);
+  const [years, setYears] = useState<string[]>([]);
+
+  useEffect(() => {
+    if (showModal && insuranceType === 'Motor') {
+      fetchJsonp('https://www.carqueryapi.com/api/0.3/?callback=?&cmd=getMakes')
+        .then(res => res.json())
+        .then((data: any) => {
+          const allMakes = data.Makes || [];
+          const filtered = allMakes.filter((m: any) => KENYAN_MAKES.includes(m.make_display));
+          setMakes(filtered);
+        })
+        .catch(console.error);
+    }
+  }, [showModal, insuranceType]);
+
+  useEffect(() => {
+    if (vehicleMake) {
+      fetchJsonp(`https://www.carqueryapi.com/api/0.3/?callback=?&cmd=getModels&make=${vehicleMake}`)
+        .then(res => res.json())
+        .then((data: any) => setModels(data.Models || []))
+        .catch(console.error);
+    }
+  }, [vehicleMake]);
+
+  useEffect(() => {
+    if (vehicleMake && vehicleModel) {
+      fetchJsonp(`https://www.carqueryapi.com/api/0.3/?callback=?&cmd=getTrims&make=${vehicleMake}&model=${vehicleModel}`)
+        .then(res => res.json())
+        .then((data: any) => {
+          const yrs: string[] = Array.from(
+            new Set(
+              data.Trims.map((t: any) => String(t.model_year))
+            )
+          );
+          setYears(yrs);
+        })
+        .catch(console.error);
+    }
+  }, [vehicleMake, vehicleModel]);
+
   return (
     <div className="bg-seasalt">
       <div className="container mx-auto px-6 md:px-12 py-16 md:py-24">
@@ -15,12 +74,13 @@ const Hero: React.FC = () => {
               With over 20 years of industry-leading expertise, Allion Insurance Brokers Ltd delivers bespoke coverage solutions tailored to your needs. Experience unparalleled service and peace of mind with Kenya’s premier brokerage.
             </p>
             <div className="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
-              <Link 
-                to="/quote" 
+              <button
+                type="button"
+                onClick={() => setShowModal(true)}
                 className="font-helvetica font-bold bg-auburn hover:bg-opacity-90 text-white px-8 py-3 rounded-lg text-center transition-colors"
               >
                 Request a Quote
-              </Link>
+              </button>
               <Link 
                 to="/plans" 
                 className="font-helvetica font-bold border-2 border-oda-blue text-oda-blue hover:bg-oda-blue hover:text-white px-8 py-3 rounded-lg text-center transition-colors"
@@ -84,6 +144,135 @@ const Hero: React.FC = () => {
           </div>
         </div>
       </div>
+      {showModal && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+          <div className="bg-white rounded-lg w-11/12 max-w-md p-6 relative">
+            <button
+              type="button"
+              className="absolute top-2 right-2 text-gray-500 hover:text-gray-700"
+              onClick={() => setShowModal(false)}
+            >
+              &times;
+            </button>
+            <h2 className="text-2xl font-helvetica font-bold mb-4 text-oda-blue">Request a Quote</h2>
+            <form className="space-y-4">
+              <div>
+                <label className="block font-helvetica mb-1">First Name</label>
+                <input
+                  type="text"
+                  value={firstName}
+                  onChange={(e) => setFirstName(e.target.value)}
+                  className="w-full border border-gray-300 rounded-lg p-2 font-helvetica"
+                />
+              </div>
+              <div>
+                <label className="block font-helvetica mb-1">Phone No</label>
+                <input
+                  type="tel"
+                  value={phone}
+                  onChange={(e) => setPhone(e.target.value)}
+                  className="w-full border border-gray-300 rounded-lg p-2 font-helvetica"
+                />
+              </div>
+              <div>
+                <label className="block font-helvetica mb-1">Type of Insurance</label>
+                <div className="flex gap-4">
+                  <button
+                    type="button"
+                    className={`px-4 py-2 rounded-lg font-helvetica border ${
+                      insuranceType === 'Motor'
+                        ? 'bg-oda-blue text-white border-oda-blue'
+                        : 'bg-white text-gray-700 border-gray-300'
+                    }`}
+                    onClick={() => setInsuranceType('Motor')}
+                  >
+                    Motor
+                  </button>
+                  <button
+                    type="button"
+                    className={`px-4 py-2 rounded-lg font-helvetica border ${
+                      insuranceType === 'Health'
+                        ? 'bg-oda-blue text-white border-oda-blue'
+                        : 'bg-white text-gray-700 border-gray-300'
+                    }`}
+                    onClick={() => setInsuranceType('Health')}
+                  >
+                    Health
+                  </button>
+                </div>
+              </div>
+              {insuranceType === 'Motor' && (
+                <div className="space-y-4">
+                  <div>
+                    <label className="block font-helvetica mb-1">Vehicle Make</label>
+                    <select
+                      value={vehicleMake}
+                      onChange={e => { setVehicleMake(e.target.value); setVehicleModel(''); setYears([]); }}
+                      className="w-full border border-gray-300 rounded-lg p-2 font-helvetica"
+                    >
+                      <option value="">Select Make</option>
+                      {makes.map(m => (
+                        <option key={m.make_id} value={m.make_id}>{m.make_display}</option>
+                      ))}
+                    </select>
+                  </div>
+                  <div>
+                    <label className="block font-helvetica mb-1">Vehicle Model</label>
+                    <select
+                      value={vehicleModel}
+                      onChange={e => setVehicleModel(e.target.value)}
+                      className="w-full border border-gray-300 rounded-lg p-2 font-helvetica"
+                      disabled={!models.length}
+                    >
+                      <option value="">Select Model</option>
+                      {models.map(m => (
+                        <option key={m.model_name} value={m.model_name}>{m.model_name}</option>
+                      ))}
+                    </select>
+                  </div>
+                  <div>
+                    <label className="block font-helvetica mb-1">Year</label>
+                    <select
+                      value={vehicleYear}
+                      onChange={e => setVehicleYear(e.target.value)}
+                      className="w-full border border-gray-300 rounded-lg p-2 font-helvetica"
+                      disabled={!years.length}
+                    >
+                      <option value="">Select Year</option>
+                      {years.map(y => (
+                        <option key={y} value={y}>{y}</option>
+                      ))}
+                    </select>
+                  </div>
+                  <div>
+                    <label className="block font-helvetica mb-1">Estimated Value (KES)</label>
+                    <input
+                      type="number"
+                      value={estimatedValue}
+                      onChange={(e) => setEstimatedValue(e.target.value)}
+                      placeholder="e.g. 1000000"
+                      className="w-full border border-gray-300 rounded-lg p-2 font-helvetica"
+                    />
+                  </div>
+                </div>
+              )}
+              <div className="flex justify-end">
+                <button
+                  type="button"
+                  onClick={() => {
+                    // TODO: handle submission
+                    setShowModal(false);
+                  }}
+                  disabled={!(firstName && phone && insuranceType)}
+                  className="px-4 py-2 bg-oda-blue text-white rounded-lg font-helvetica hover:bg-opacity-90 disabled:opacity-50"
+                >
+                  Submit
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

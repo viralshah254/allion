@@ -22,43 +22,56 @@ const HomePage: React.FC = () => {
             </div>
             
             {/* Feature grid */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-12">
-              <div className="bg-seasalt p-6 rounded-lg shadow-md transform hover:scale-105 transition-transform duration-500 ease-in-out">
-                <div className="h-16 w-16 bg-oda-blue rounded-full flex items-center justify-center mx-auto mb-4 animate-pulse">
-                  {/* Life insurance icon */}
-                  <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 12c2.21 0 4-1.79 4-4S14.21 4 12 4 8 5.79 8 8s1.79 4 4 4zM6 20v-2a4 4 0 014-4h4a4 4 0 014 4v2" />
-                  </svg>
-                </div>
-                <h3 className="font-helvetica font-bold text-oda-indigo text-xl mb-2">Life Insurance</h3>
-                <p className="font-helvetica text-gray-600">
-                  Secure your loved ones’ future with tailor-made life policies and flexible premium plans.
-                </p>
-              </div>
-
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mt-12">
               <div className="bg-seasalt p-6 rounded-lg shadow-md transform hover:scale-105 transition-transform duration-500 ease-in-out">
                 <div className="h-16 w-16 bg-airforce-blue rounded-full flex items-center justify-center mx-auto mb-4 animate-pulse">
-                  {/* Non-life insurance icon */}
+                  {/* Motor Insurance icon */}
                   <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 10h18M3 14h18M5 6h14a2 2 0 012 2v8a2 2 0 01-2 2H5a2 2 0 01-2-2v-8a2 2 0 012-2z" />
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 13l2-2m0 0l7-7 7 7M13 6v8m-6 4h12v2H7v-2z" />
                   </svg>
                 </div>
-                <h3 className="font-helvetica font-bold text-oda-indigo text-xl mb-2">Non-Life Insurance</h3>
+                <h3 className="font-helvetica font-bold text-oda-indigo text-xl mb-2">Motor Insurance</h3>
                 <p className="font-helvetica text-gray-600">
-                  Protect your vehicles, homes, and businesses with comprehensive coverage and fast claims support.
+                  Comprehensive cover for your vehicles against accidents, theft, and third-party liability.
                 </p>
               </div>
 
               <div className="bg-seasalt p-6 rounded-lg shadow-md transform hover:scale-105 transition-transform duration-500 ease-in-out">
                 <div className="h-16 w-16 bg-auburn rounded-full flex items-center justify-center mx-auto mb-4 animate-pulse">
-                  {/* Digital service icon */}
+                  {/* Fire Insurance icon */}
                   <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 2L2 22h20L12 2zm0 5v6m0 4h.01" />
                   </svg>
                 </div>
-                <h3 className="font-helvetica font-bold text-oda-indigo text-xl mb-2">Digital & Advisory</h3>
+                <h3 className="font-helvetica font-bold text-oda-indigo text-xl mb-2">Fire Insurance</h3>
                 <p className="font-helvetica text-gray-600">
-                  Enjoy 24/7 online policy management, expert advice, and interactive tools for total peace of mind.
+                  Protection against loss or damage to property caused by fire, smoke, and allied perils.
+                </p>
+              </div>
+
+              <div className="bg-seasalt p-6 rounded-lg shadow-md transform hover:scale-105 transition-transform duration-500 ease-in-out">
+                <div className="h-16 w-16 bg-oda-blue rounded-full flex items-center justify-center mx-auto mb-4 animate-pulse">
+                  {/* Marine Insurance icon */}
+                  <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 12h18M3 6h18M3 18h18" />
+                  </svg>
+                </div>
+                <h3 className="font-helvetica font-bold text-oda-indigo text-xl mb-2">Marine Insurance</h3>
+                <p className="font-helvetica text-gray-600">
+                  Coverage for cargo, hull, and liabilities during transit by sea, inland waterways, or air.
+                </p>
+              </div>
+
+              <div className="bg-seasalt p-6 rounded-lg shadow-md transform hover:scale-105 transition-transform duration-500 ease-in-out">
+                <div className="h-16 w-16 bg-airforce-blue rounded-full flex items-center justify-center mx-auto mb-4 animate-pulse">
+                  {/* Domestic Insurance icon */}
+                  <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v-4a4 4 0 014-4h8a4 4 0 014 4v4M12 20v-6m0 0l3 3m-3-3l-3 3" />
+                  </svg>
+                </div>
+                <h3 className="font-helvetica font-bold text-oda-indigo text-xl mb-2">Domestic Insurance</h3>
+                <p className="font-helvetica text-gray-600">
+                  Protect your home and household contents against theft, damage, and liability risks.
                 </p>
               </div>
             </div>
