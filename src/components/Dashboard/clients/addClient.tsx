@@ -1,14 +1,20 @@
 import React, { useState } from 'react';
 
 const AddClient: React.FC = () => {
-  const [type, setType] = useState<'Individual' | 'Company'>('Individual');
+  const [type, setType] = useState<'Individual' | 'Company' | 'Group'>('Individual');
+  const [groupName, setGroupName] = useState('');
+  const [groupMembers, setGroupMembers] = useState<string[]>([]);
   // Step progression state
   const [typeSelected, setTypeSelected] = useState(false);
-  const [isPartOfCompany, setIsPartOfCompany] = useState<'Yes' | 'No' | ''>('');
-  const [individualCompanyStepComplete, setIndividualCompanyStepComplete] = useState(false);
+  const [groupAction, setGroupAction] = useState<'Search' | 'Create' | ''>('');
+  const [selectedGroup, setSelectedGroup] = useState('');
   const [syncMainContact, setSyncMainContact] = useState(false);
   const [dobFocused, setDobFocused] = useState(false);
   const [dobError, setDobError] = useState('');
+  // Add to Existing Group state
+  const [addToGroup, setAddToGroup] = useState<'Yes' | 'No' | ''>('');
+  const [existingGroups, setExistingGroups] = useState<string[]>([]); // TODO: populate from API
+  const [selectedGroups, setSelectedGroups] = useState<string[]>([]);
   const [formData, setFormData] = useState({
     code: '',
     firstName: '',
@@ -164,8 +170,6 @@ const AddClient: React.FC = () => {
                   onClick={() => {
                     setType('Individual');
                     setTypeSelected(true);
-                    setIsPartOfCompany('');
-                    setIndividualCompanyStepComplete(false);
                   }}
                 >
                   Individual
@@ -180,8 +184,20 @@ const AddClient: React.FC = () => {
                   onClick={() => {
                     setType('Company');
                     setTypeSelected(true);
-                    setIsPartOfCompany('');
-                    setIndividualCompanyStepComplete(false);
+                  }}
+                >
+                  Corporate
+                </button>
+                <button
+                  type="button"
+                  className={`px-4 py-2 rounded-lg font-helvetica border ${
+                    typeSelected && type === 'Group'
+                      ? 'bg-oda-blue text-white border-oda-blue'
+                      : 'bg-white text-gray-700 border-gray-300'
+                  }`}
+                  onClick={() => {
+                    setType('Group');
+                    setTypeSelected(true);
                   }}
                 >
                   Group
@@ -190,89 +206,130 @@ const AddClient: React.FC = () => {
             </div>
           </div>
 
-          {/* Step 2: Company Association (for Individual) */}
-          {typeSelected && type === 'Individual' && (
-            <div className="bg-gray-50 p-4 rounded-lg border border-gray-200">
-              <h2 className="text-lg font-semibold text-gray-800 mt-0 mb-2">Step 2: Company Association</h2>
-              <div>
-                <label className="font-helvetica block mb-2">Is the individual part of a company?</label>
-                <div className="flex gap-4 mb-2">
-                  <button
-                    type="button"
-                    className={`px-4 py-2 rounded-lg font-helvetica border ${
-                      isPartOfCompany === 'Yes'
-                        ? 'bg-oda-blue text-white border-oda-blue'
-                        : 'bg-white text-gray-700 border-gray-300'
-                    }`}
-                    onClick={() => {
-                      setIsPartOfCompany('Yes');
-                      setIndividualCompanyStepComplete(false);
-                    }}
-                  >
-                    Yes
-                  </button>
-                  <button
-                    type="button"
-                    className={`px-4 py-2 rounded-lg font-helvetica border ${
-                      isPartOfCompany === 'No'
-                        ? 'bg-oda-blue text-white border-oda-blue'
-                        : 'bg-white text-gray-700 border-gray-300'
-                    }`}
-                    onClick={() => {
-                      setIsPartOfCompany('No');
-                      setIndividualCompanyStepComplete(true);
-                    }}
-                  >
-                    No
-                  </button>
-                </div>
-                {/* Company search */}
-                {isPartOfCompany === 'Yes' && (
-                  <div className="mt-4">
-                    <label className="block font-helvetica mb-1">Search for Company</label>
-                    <div className="relative w-full">
+
+          {/* Step 2: Group Membership */}
+          {typeSelected && type !== 'Group' && (
+            <div className="bg-gray-50 p-4 rounded-lg border border-gray-200 mt-4">
+              <h2 className="text-lg font-semibold text-gray-800 mt-0 mb-2">Step 2: Group Membership</h2>
+              <label className="font-helvetica block mb-2">Is this client part of an existing group?</label>
+              <div className="flex gap-4 mb-2">
+                <button
+                  type="button"
+                  className={`px-4 py-2 rounded-lg font-helvetica border ${
+                    addToGroup === 'Yes' ? 'bg-oda-blue text-white border-oda-blue' : 'bg-white text-gray-700 border-gray-300'
+                  }`}
+                  onClick={() => setAddToGroup('Yes')}
+                >
+                  Yes
+                </button>
+                <button
+                  type="button"
+                  className={`px-4 py-2 rounded-lg font-helvetica border ${
+                    addToGroup === 'No' ? 'bg-oda-blue text-white border-oda-blue' : 'bg-white text-gray-700 border-gray-300'
+                  }`}
+                  onClick={() => setAddToGroup('No')}
+                >
+                  No
+                </button>
+              </div>
+              {addToGroup === 'Yes' && (
+                <div>
+                  <label className="font-helvetica block mb-2">Select or create a group:</label>
+                  <div className="flex gap-4 mb-2">
+                    <button
+                      type="button"
+                      className={`px-4 py-2 rounded-lg font-helvetica border ${
+                        groupAction === 'Search' ? 'bg-oda-blue text-white border-oda-blue' : 'bg-white text-gray-700 border-gray-300'
+                      }`}
+                      onClick={() => setGroupAction('Search')}
+                    >
+                      Search Existing
+                    </button>
+                    <button
+                      type="button"
+                      className={`px-4 py-2 rounded-lg font-helvetica border ${
+                        groupAction === 'Create' ? 'bg-oda-blue text-white border-oda-blue' : 'bg-white text-gray-700 border-gray-300'
+                      }`}
+                      onClick={() => setGroupAction('Create')}
+                    >
+                      Create New
+                    </button>
+                  </div>
+                  {groupAction === 'Search' && (
+                    <div>
                       <input
                         type="text"
-                        placeholder="Start typing to search company..."
-                        className="w-full border border-gray-300 rounded-lg p-2 font-helvetica focus:ring-2 focus:ring-oda-blue focus:outline-none"
-                        value={formData.company}
-                        onChange={(e) => {
-                          const value = e.target.value;
-                          handleChange('company', value);
-                          if (
-                            value &&
-                            value !== 'Company not found - create new'
-                          ) {
-                            setIndividualCompanyStepComplete(true);
-                          } else {
-                            setIndividualCompanyStepComplete(false);
-                          }
-                        }}
-                        list="company-options"
+                        placeholder="Search group..."
+                        list="group-options"
+                        className="w-full border border-gray-300 rounded-lg p-2 font-helvetica"
+                        value={selectedGroup}
+                        onChange={(e) => setSelectedGroup(e.target.value)}
                       />
-                      <datalist id="company-options">
-                        <option value="Company A" />
-                        <option value="Company B" />
-                        <option value="Company C" />
-                        <option value="Company not found - create new" />
+                      <datalist id="group-options">
+                        {existingGroups.map((g) => <option key={g} value={g} />)}
                       </datalist>
                     </div>
-                    {formData.company === 'Company not found - create new' && (
-                      <p className="text-sm text-red-600 font-helvetica mt-2">
-                        Please register the company first before proceeding.{' '}
-                        <a href="/dashboard/add-insurance-company" className="text-oda-blue underline hover:text-blue-700">
-                          Click here to register
-                        </a>
-                      </p>
-                    )}
-                  </div>
-                )}
-              </div>
+                  )}
+                  {groupAction === 'Create' && (
+                    <div className="grid grid-cols-1 gap-4">
+                      <input
+                        placeholder="New Group Name"
+                        className="border border-gray-300 rounded-lg p-2 font-helvetica"
+                        value={groupName}
+                        onChange={(e) => setGroupName(e.target.value)}
+                      />
+                      <label className="font-helvetica">Add Members</label>
+                      <select
+                        multiple
+                        className="border border-gray-300 rounded-lg p-2 font-helvetica"
+                        value={groupMembers}
+                        onChange={(e) => setGroupMembers(Array.from(e.target.selectedOptions, o => o.value))}
+                      >
+                        {/* TODO: dynamic client list */}
+                      </select>
+                    </div>
+                  )}
+                </div>
+              )}
             </div>
           )}
 
+          {/* Step 2: Group Details */}
+          {typeSelected && type === 'Group' && (
+            <>
+              <div className="bg-gray-50 p-4 rounded-lg border border-gray-200">
+                <h2 className="text-lg font-semibold text-gray-800 mb-2">Step 2: Group Details</h2>
+                <div className="grid grid-cols-1 gap-4">
+                  <input
+                    placeholder="Group Name"
+                    className="border border-gray-300 rounded-lg p-2 font-helvetica"
+                    value={groupName}
+                    onChange={(e) => setGroupName(e.target.value)}
+                  />
+                  <label className="font-helvetica">Add Members</label>
+                  <select
+                    multiple
+                    className="border border-gray-300 rounded-lg p-2 font-helvetica"
+                    value={groupMembers}
+                    onChange={(e) => setGroupMembers(Array.from(e.target.selectedOptions, o => o.value))}
+                  >
+                    {/* TODO: replace with dynamic client list */}
+                  </select>
+                </div>
+              </div>
+              <div className="flex justify-center mt-4">
+                <button
+                  type="submit"
+                  className="px-6 py-2 bg-oda-blue text-white rounded-lg font-helvetica hover:bg-opacity-90"
+                >
+                  Create Group
+                </button>
+              </div>
+            </>
+          )}
+
           {/* Step 3: Client Details */}
-          {((type === 'Individual' && individualCompanyStepComplete) || (type === 'Company' && typeSelected)) && (
+          {(type === 'Individual' && typeSelected) && (
             <div className="bg-gray-50 p-4 rounded-lg border border-gray-200">
               <h2 className="text-lg font-semibold text-gray-800 mt-0 mb-2">Step 3: Client Details</h2>
               {type === 'Individual' && (
@@ -353,7 +410,11 @@ const AddClient: React.FC = () => {
                   <input placeholder="Email Address" className="border border-gray-300 rounded-lg p-2 font-helvetica" onChange={(e) => handleChange('email', e.target.value)} />
                 </div>
               )}
-              {type === 'Company' && (
+            </div>
+          )}
+          {(type === 'Company' && typeSelected) && (
+            <div className="bg-gray-50 p-4 rounded-lg border border-gray-200">
+              <h2 className="text-lg font-semibold text-gray-800 mt-0 mb-2">Corporate Details</h2>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div className="md:col-span-2">
                     <label className="block text-sm font-medium text-gray-700 mb-1">Client Code (autogenerated)</label>
@@ -364,7 +425,7 @@ const AddClient: React.FC = () => {
                     />
                   </div>
                   <input
-                    placeholder="Full Name of Company"
+                    placeholder="Company Name"
                     className="border border-gray-300 rounded-lg p-2 font-helvetica"
                     value={formData.fullName}
                     onChange={(e) => handleChange('fullName', e.target.value)}
@@ -389,13 +450,12 @@ const AddClient: React.FC = () => {
                   </div>
                   <input placeholder="Email Address" className="border border-gray-300 rounded-lg p-2 font-helvetica" onChange={(e) => handleChange('email', e.target.value)} />
                 </div>
-              )}
             </div>
           )}
 
           {/* Contact Persons */}
-          {((type === 'Individual' && individualCompanyStepComplete) ||
-           (type === 'Company' && typeSelected)) && (
+          {(type === 'Individual' && typeSelected) ||
+           (type === 'Company' && typeSelected) ? (
             <div className="bg-gray-50 p-4 rounded-lg border border-gray-200 mt-4">
               <h3 className="text-lg font-semibold text-gray-800 mb-2">Contact Persons</h3>
               {formData.contacts.map((contact, index) => (
@@ -472,10 +532,11 @@ const AddClient: React.FC = () => {
                 + Add another contact
               </button>
             </div>
-          )}
+          ) : null}
 
-          {/* Referred By */}
-          {((type === 'Individual' && individualCompanyStepComplete) || (type === 'Company' && typeSelected)) && (
+
+          {/* Step 5: Referred By */}
+          {(type === 'Individual' && typeSelected) || (type === 'Company' && typeSelected) ? (
             <div className="bg-gray-50 p-4 rounded-lg border border-gray-200 mt-4">
               <input
                 placeholder="Referred By (optional)"
@@ -484,24 +545,24 @@ const AddClient: React.FC = () => {
                 onChange={(e) => handleChange('referredBy', e.target.value)}
               />
             </div>
-          )}
+          ) : null}
 
-          {/* Step 4: KYC Documents */}
-          {((type === 'Individual' && individualCompanyStepComplete) || (type === 'Company' && typeSelected)) && (
+          {/* Step 6: KYC Documents */}
+          {(type === 'Individual' && typeSelected) || (type === 'Company' && typeSelected) ? (
             <div className="bg-gray-50 p-4 rounded-lg border border-gray-200 mt-4">
-              <h2 className="text-lg font-semibold text-gray-800 mt-0 mb-2">Step 4: Upload KYC Documents</h2>
+              <h2 className="text-lg font-semibold text-gray-800 mt-0 mb-2">Step 6: Upload KYC Documents</h2>
               {renderKYCFields()}
             </div>
-          )}
+          ) : null}
 
           {/* Submit Button */}
-          {((type === 'Individual' && individualCompanyStepComplete) || (type === 'Company' && typeSelected)) && (
+          {(typeSelected && (type === 'Individual' || type === 'Company')) ? (
             <div className="flex justify-center">
               <button type="submit" className="mt-6 px-6 py-2 bg-oda-blue text-white rounded-lg font-helvetica hover:bg-opacity-90">
                 Submit Client
               </button>
             </div>
-          )}
+          ) : null}
         </div>
       </form>
     </div>
