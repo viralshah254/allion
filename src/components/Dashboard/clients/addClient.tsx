@@ -3,18 +3,15 @@ import React, { useState } from 'react';
 const AddClient: React.FC = () => {
   const [type, setType] = useState<'Individual' | 'Company' | 'Group'>('Individual');
   const [groupName, setGroupName] = useState('');
-  const [groupMembers, setGroupMembers] = useState<string[]>([]);
   // Step progression state
   const [typeSelected, setTypeSelected] = useState(false);
   const [groupAction, setGroupAction] = useState<'Search' | 'Create' | ''>('');
-  const [selectedGroup, setSelectedGroup] = useState('');
   const [syncMainContact, setSyncMainContact] = useState(false);
   const [dobFocused, setDobFocused] = useState(false);
   const [dobError, setDobError] = useState('');
   // Add to Existing Group state
   const [addToGroup, setAddToGroup] = useState<'Yes' | 'No' | ''>('');
-  const [existingGroups, setExistingGroups] = useState<string[]>([]); // TODO: populate from API
-  const [selectedGroups, setSelectedGroups] = useState<string[]>([]);
+  const [existingGroups] = useState<string[]>([]); // TODO: populate from API
   const [formData, setFormData] = useState({
     code: '',
     firstName: '',
@@ -32,6 +29,7 @@ const AddClient: React.FC = () => {
     company: '',
     referredBy : '',
     kyc: {} as Record<string, File | null>,
+    groups: [] as string[],
   });
 
   const handleChange = (field: string, value: string) => {
@@ -257,17 +255,14 @@ const AddClient: React.FC = () => {
                   </div>
                   {groupAction === 'Search' && (
                     <div>
-                      <input
-                        type="text"
-                        placeholder="Search group..."
-                        list="group-options"
+                      <select
+                        multiple
                         className="w-full border border-gray-300 rounded-lg p-2 font-helvetica"
-                        value={selectedGroup}
-                        onChange={(e) => setSelectedGroup(e.target.value)}
-                      />
-                      <datalist id="group-options">
-                        {existingGroups.map((g) => <option key={g} value={g} />)}
-                      </datalist>
+                        value={formData.groups}
+                        onChange={(e) => setFormData({ ...formData, groups: Array.from(e.target.selectedOptions, o => o.value) })}
+                      >
+                        {existingGroups.map((g) => <option key={g} value={g}>{g}</option>)}
+                      </select>
                     </div>
                   )}
                   {groupAction === 'Create' && (
@@ -278,15 +273,6 @@ const AddClient: React.FC = () => {
                         value={groupName}
                         onChange={(e) => setGroupName(e.target.value)}
                       />
-                      <label className="font-helvetica">Add Members</label>
-                      <select
-                        multiple
-                        className="border border-gray-300 rounded-lg p-2 font-helvetica"
-                        value={groupMembers}
-                        onChange={(e) => setGroupMembers(Array.from(e.target.selectedOptions, o => o.value))}
-                      >
-                        {/* TODO: dynamic client list */}
-                      </select>
                     </div>
                   )}
                 </div>
@@ -306,12 +292,12 @@ const AddClient: React.FC = () => {
                     value={groupName}
                     onChange={(e) => setGroupName(e.target.value)}
                   />
-                  <label className="font-helvetica">Add Members</label>
+                  <label className="font-helvetica">Add Existing Members</label>
                   <select
                     multiple
                     className="border border-gray-300 rounded-lg p-2 font-helvetica"
-                    value={groupMembers}
-                    onChange={(e) => setGroupMembers(Array.from(e.target.selectedOptions, o => o.value))}
+                    value={formData.groups}
+                    onChange={(e) => setFormData({ ...formData, groups: Array.from(e.target.selectedOptions, o => o.value) })}
                   >
                     {/* TODO: replace with dynamic client list */}
                   </select>
