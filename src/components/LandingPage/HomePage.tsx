@@ -1,4 +1,6 @@
 import React from 'react';
+import { motion } from 'framer-motion'
+import { ChartBarIcon, BoltIcon, CubeIcon, UserCircleIcon } from '@heroicons/react/24/outline'
 import Header from './Header';
 import Hero from './Hero';
 import Footer from './Footer';
@@ -11,71 +13,92 @@ const HomePage: React.FC = () => {
         <Hero />
         <div className="container mx-auto px-4 py-12">
           {/* Additional home page content */}
-          <div className="text-center my-12">
+          <motion.div
+            className="text-center my-12"
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+          >
             <h2 className="font-helvetica font-bold text-3xl md:text-4xl text-oda-blue mb-6 animate-fadeIn">
-              Allion Insurance Brokers Ltd — Kenya’s Premier Life & Non-Life Insurance Partner
+              Pioneering Excellence in Insurance Brokerage
             </h2>
             <div className="max-w-3xl mx-auto">
               <p className="font-helvetica text-gray-700 mb-6 leading-relaxed animate-fadeIn delay-200">
-                From safeguarding your family’s future with comprehensive life insurance to protecting your assets with robust non-life coverage, Allion offers bespoke policies designed for every Kenyan need. Leverage our 20+ years of industry expertise, personalized advisory service, and cutting-edge digital tools for seamless policy management and rapid claims processing.
+                Partner with Kenya’s leading brokerage for tailored non‑life solutions across motor, fire, marine, and domestic lines. We negotiate with top insurers on your behalf, provide expert risk advisory, and streamline policy management—all under one roof.
               </p>
             </div>
-            
-            {/* Feature grid */}
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mt-12">
-              <div className="bg-seasalt p-6 rounded-lg shadow-md transform hover:scale-105 transition-transform duration-500 ease-in-out">
-                <div className="h-16 w-16 bg-airforce-blue rounded-full flex items-center justify-center mx-auto mb-4 animate-pulse">
-                  {/* Motor Insurance icon */}
-                  <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 13l2-2m0 0l7-7 7 7M13 6v8m-6 4h12v2H7v-2z" />
-                  </svg>
-                </div>
-                <h3 className="font-helvetica font-bold text-oda-indigo text-xl mb-2">Motor Insurance</h3>
-                <p className="font-helvetica text-gray-600">
-                  Comprehensive cover for your vehicles against accidents, theft, and third-party liability.
-                </p>
+          </motion.div>
+          
+          {/* Feature grid */}
+          <motion.div
+            className="grid gap-8 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 mt-12"
+            initial="hidden"
+            animate="visible"
+            variants={{
+              hidden: {},
+              visible: { transition: { staggerChildren: 0.2 } }
+            }}
+          >
+            <motion.div
+              className="bg-seasalt p-6 rounded-xl shadow-xl transform hover:scale-105 transition-transform duration-500 ease-in-out"
+              variants={{
+                hidden: { opacity: 0, y: 20 },
+                visible: { opacity: 1, y: 0 }
+              }}
+              whileHover={{ scale: 1.05 }}
+            >
+              <div className="h-16 w-16 bg-oda-blue rounded-full flex items-center justify-center mx-auto mb-4">
+                <BoltIcon className="h-8 w-8 text-white animate-bounce" />
               </div>
+              <h3 className="font-helvetica font-bold text-oda-indigo text-xl mb-2">Personalized Risk Advisory</h3>
+              <p className="font-helvetica text-gray-600">Our experts analyze your exposures to recommend optimal cover from leading insurers—ensuring you pay only for what you need.</p>
+            </motion.div>
 
-              <div className="bg-seasalt p-6 rounded-lg shadow-md transform hover:scale-105 transition-transform duration-500 ease-in-out">
-                <div className="h-16 w-16 bg-auburn rounded-full flex items-center justify-center mx-auto mb-4 animate-pulse">
-                  {/* Fire Insurance icon */}
-                  <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 2L2 22h20L12 2zm0 5v6m0 4h.01" />
-                  </svg>
-                </div>
-                <h3 className="font-helvetica font-bold text-oda-indigo text-xl mb-2">Fire Insurance</h3>
-                <p className="font-helvetica text-gray-600">
-                  Protection against loss or damage to property caused by fire, smoke, and allied perils.
-                </p>
+            <motion.div
+              className="bg-seasalt p-6 rounded-xl shadow-xl transform hover:scale-105 transition-transform duration-500 ease-in-out"
+              variants={{
+                hidden: { opacity: 0, y: 20 },
+                visible: { opacity: 1, y: 0 }
+              }}
+              whileHover={{ scale: 1.05 }}
+            >
+              <div className="h-16 w-16 bg-airforce-blue rounded-full flex items-center justify-center mx-auto mb-4">
+                <ChartBarIcon className="h-8 w-8 text-white animate-pulse" />
               </div>
+              <h3 className="font-helvetica font-bold text-oda-indigo text-xl mb-2">Comprehensive Market Access</h3>
+              <p className="font-helvetica text-gray-600">Access competitive premiums and policy options by comparing offers from multiple insurers—all in one convenient portal.</p>
+            </motion.div>
 
-              <div className="bg-seasalt p-6 rounded-lg shadow-md transform hover:scale-105 transition-transform duration-500 ease-in-out">
-                <div className="h-16 w-16 bg-oda-blue rounded-full flex items-center justify-center mx-auto mb-4 animate-pulse">
-                  {/* Marine Insurance icon */}
-                  <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 12h18M3 6h18M3 18h18" />
-                  </svg>
-                </div>
-                <h3 className="font-helvetica font-bold text-oda-indigo text-xl mb-2">Marine Insurance</h3>
-                <p className="font-helvetica text-gray-600">
-                  Coverage for cargo, hull, and liabilities during transit by sea, inland waterways, or air.
-                </p>
+            <motion.div
+              className="bg-seasalt p-6 rounded-xl shadow-xl transform hover:scale-105 transition-transform duration-500 ease-in-out"
+              variants={{
+                hidden: { opacity: 0, y: 20 },
+                visible: { opacity: 1, y: 0 }
+              }}
+              whileHover={{ scale: 1.05 }}
+            >
+              <div className="h-16 w-16 bg-auburn rounded-full flex items-center justify-center mx-auto mb-4">
+                <CubeIcon className="h-8 w-8 text-white animate-spin" />
               </div>
+              <h3 className="font-helvetica font-bold text-oda-indigo text-xl mb-2">Claims Advocacy & Support</h3>
+              <p className="font-helvetica text-gray-600">We advocate on your behalf during the claims process—liaising with insurers to expedite settlements and secure fair outcomes.</p>
+            </motion.div>
 
-              <div className="bg-seasalt p-6 rounded-lg shadow-md transform hover:scale-105 transition-transform duration-500 ease-in-out">
-                <div className="h-16 w-16 bg-airforce-blue rounded-full flex items-center justify-center mx-auto mb-4 animate-pulse">
-                  {/* Domestic Insurance icon */}
-                  <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v-4a4 4 0 014-4h8a4 4 0 014 4v4M12 20v-6m0 0l3 3m-3-3l-3 3" />
-                  </svg>
-                </div>
-                <h3 className="font-helvetica font-bold text-oda-indigo text-xl mb-2">Domestic Insurance</h3>
-                <p className="font-helvetica text-gray-600">
-                  Protect your home and household contents against theft, damage, and liability risks.
-                </p>
+            <motion.div
+              className="bg-seasalt p-6 rounded-xl shadow-xl transform hover:scale-105 transition-transform duration-500 ease-in-out"
+              variants={{
+                hidden: { opacity: 0, y: 20 },
+                visible: { opacity: 1, y: 0 }
+              }}
+              whileHover={{ scale: 1.05 }}
+            >
+              <div className="h-16 w-16 bg-oda-blue rounded-full flex items-center justify-center mx-auto mb-4">
+                <UserCircleIcon className="h-8 w-8 text-white animate-pulse" />
               </div>
-            </div>
-          </div>
+              <h3 className="font-helvetica font-bold text-oda-indigo text-xl mb-2">Digital Policy Management</h3>
+              <p className="font-helvetica text-gray-600">Manage all your policies across carriers in one dashboard, with renewal reminders, document storage, and side‑by‑side comparisons.</p>
+            </motion.div>
+          </motion.div>
         </div>
       </main>
       <Footer />

@@ -27,12 +27,16 @@ import AddClient from './components/Dashboard/clients/addClient';
 import InsuranceCompanies from './components/Sidebar/insurancecompanies';
 import AddInsuranceCompany from './components/insurancecompanies/addinsuranceCompany';
 import AddPolicy from './components/Dashboard/policies/addPolicyTemplate';
+import InsurancePlans from './components/homepage/insurancePlans'
+import AboutUs from './components/homepage/aboutus'
 function App() {
   return (
     <BrowserRouter>
       <Routes>
         {/* Public routes */}
         <Route path="/" element={<HomePage />} />
+        <Route path="/insurance-plans" element={<InsurancePlans />} />
+        <Route path="/about" element={<AboutUs />} />
         <Route path="/tailwind-test" element={<TailwindTest />} />
         
         {/* Protected / Dashboard routes */}

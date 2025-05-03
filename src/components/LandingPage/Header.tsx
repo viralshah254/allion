@@ -1,11 +1,17 @@
 import React, { useState } from 'react';
+import { motion } from 'framer-motion'
 import { Link } from 'react-router-dom';
 
 const Header: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   
   return (
-    <header className="bg-white shadow-md text-oda-blue py-4">
+    <motion.header
+      className="bg-white shadow-md text-oda-blue py-4"
+      initial={{ y: -50, opacity: 0 }}
+      animate={{ y: 0, opacity: 1 }}
+      transition={{ duration: 0.6, ease: 'easeOut' }}
+    >
       <div className="container mx-auto px-6 md:px-12 flex justify-between items-center">
         {/* Logo */}
         <div className="flex items-center">
@@ -19,17 +25,17 @@ const Header: React.FC = () => {
           <Link to="/" className="font-helvetica text-oda-indigo hover:text-auburn transition-colors">
             Home
           </Link>
-          <Link to="/services" className="font-helvetica text-oda-indigo hover:text-auburn transition-colors">
-            Insurance Plans
+          <Link to="/insurance-plans" className="font-helvetica text-oda-indigo hover:text-auburn transition-colors">
+            Our Covers
           </Link>
           <Link to="/about" className="font-helvetica text-oda-indigo hover:text-auburn transition-colors">
             About Us
           </Link>
           <Link to="/contact" className="font-helvetica text-oda-indigo hover:text-auburn transition-colors">
-            Contact
+            Get in Touch
           </Link>
           <Link to="/dashboard" className="font-helvetica font-bold bg-auburn hover:bg-opacity-90 text-white px-4 py-2 rounded-lg transition-colors">
-            Dashboard
+            Client Portal
           </Link>
         </nav>
         
@@ -52,23 +58,23 @@ const Header: React.FC = () => {
               <Link to="/" className="font-helvetica py-2 text-oda-indigo hover:text-auburn transition-colors">
                 Home
               </Link>
-              <Link to="/services" className="font-helvetica py-2 text-oda-indigo hover:text-auburn transition-colors">
-                Insurance Plans
+              <Link to="/insurance-plans" className="font-helvetica py-2 text-oda-indigo hover:text-auburn transition-colors">
+                Our Covers
               </Link>
               <Link to="/about" className="font-helvetica py-2 text-oda-indigo hover:text-auburn transition-colors">
                 About Us
               </Link>
               <Link to="/contact" className="font-helvetica py-2 text-oda-indigo hover:text-auburn transition-colors">
-                Contact
+                Get in Touch
               </Link>
               <Link to="/dashboard" className="font-helvetica font-bold bg-auburn hover:bg-opacity-90 text-white px-4 py-2 rounded-lg transition-colors w-full text-center">
-                Dashboard
+                Client Portal
               </Link>
             </div>
           </div>
         </div>
       )}
-    </header>
+    </motion.header>
   );
 };
 
