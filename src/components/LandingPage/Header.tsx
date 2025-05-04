@@ -31,11 +31,9 @@ const Header: React.FC = () => {
           <Link to="/about" className="font-helvetica text-oda-indigo hover:text-auburn transition-colors">
             About Us
           </Link>
-          <Link to="/contact" className="font-helvetica text-oda-indigo hover:text-auburn transition-colors">
-            Get in Touch
-          </Link>
+        
           <Link to="/dashboard" className="font-helvetica font-bold bg-auburn hover:bg-opacity-90 text-white px-4 py-2 rounded-lg transition-colors">
-            Client Portal
+            Log In
           </Link>
         </nav>
         
@@ -68,7 +66,7 @@ const Header: React.FC = () => {
                 Get in Touch
               </Link>
               <Link to="/dashboard" className="font-helvetica font-bold bg-auburn hover:bg-opacity-90 text-white px-4 py-2 rounded-lg transition-colors w-full text-center">
-                Client Portal
+                Log in
               </Link>
             </div>
           </div>

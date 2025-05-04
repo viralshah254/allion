@@ -1,6 +1,6 @@
 import './App.css'
 
-import { BrowserRouter, Routes, Route} from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import HomePage from './components/LandingPage/HomePage';
 import TailwindTest from './components/TailwindTest';
 import DashboardLayout from './components/Dashboard/DashboardLayout';
@@ -16,7 +16,8 @@ import CommissionsPage from './components/Sidebar/Commissions';
 import DocumentsPage from './components/Sidebar/DocumentManagement';
 import ReportsPage from './components/Sidebar/Reports';
 import IntegrationsPage from './components/Sidebar/Integrations';
-import SettingsPage from './components/Dashboard/settings';
+import Settings from './components/Dashboard/settings';
+import UsersAndRoles from './components/Profile/usersandroles';
 import DashboardPage from './components/Dashboard/Dashboard';
 import AnalyticsPage from './components/Dashboard/Analytics';
 import ClientsPage from './components/Dashboard/clients/Clients';
@@ -61,10 +62,12 @@ function App() {
           <Route path="/forecasting" element={<ForecastingPage />} />
           <Route path="/risk-management" element={<RiskManagementPage />} />
           <Route path="/chatbot" element={<ChatbotPage />} />
-          <Route path="/settings/*" element={<SettingsPage />} />
           <Route path="/insurance-companies" element={<InsuranceCompanies />} />
           <Route path="/add-policy" element={<AddPolicy />} />
-          
+          <Route path="/settings" element={<Settings />}>
+            <Route index element={<Navigate to="profile" replace />} />
+            <Route path="users-and-roles" element={<UsersAndRoles />} />
+          </Route>
         </Route>
         
         {/* 404 route */}

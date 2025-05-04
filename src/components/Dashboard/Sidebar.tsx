@@ -268,6 +268,15 @@ const Sidebar: React.FC = () => {
       ),
       children: [
         {
+          name: 'Users & Roles',
+          path: '/settings/users-and-roles',
+          icon: (
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+            </svg>
+          )
+        },
+        {
           name: 'Profile',
           path: '/settings/profile',
           icon: (
@@ -276,7 +285,53 @@ const Sidebar: React.FC = () => {
             </svg>
           )
         },
-        
+        {
+          name: 'Audit Logs',
+          path: '/settings/audit-logs',
+          icon: (
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 17v-2a4 4 0 014-4h4" />
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 17l5-5-5-5" />
+            </svg>
+          )
+        },
+        {
+          name: 'Notifications',
+          path: '/settings/notifications',
+          icon: (
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6 6 0 10-12 0v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
+            </svg>
+          )
+        },
+        {
+          name: 'Company Profile',
+          path: '/settings/company',
+          icon: (
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 19h16V5H4v14zm0-10h16m-8 0v10" />
+            </svg>
+          )
+        },
+        {
+          name: 'API Keys',
+          path: '/settings/api-keys',
+          icon: (
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 7l5 5m0 0l-5 5m5-5H9" />
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 12h2" />
+            </svg>
+          )
+        },
+        {
+          name: 'Billing',
+          path: '/settings/billing',
+          icon: (
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 1.343-3 3s1.343 3 3 3m0 4v1m0-13v1m8 4h1M3 12H4" />
+            </svg>
+          )
+        },
       ],
     },
   ];
